@@ -1,65 +1,121 @@
-#include<iostream>
-#include<time.h>
+#include<bits/stdc++.h>
+
 using namespace std;
 
-int partition(int a[],int l,int h)
-{
-        int pivot=a[l];
-        int i=l;int j=h;
+int t;
 
-        while(i<j)
-        {
-                do
-                {
-                        i++;
-                }while(a[i]<=pivot);
-                 do
-                {
-                       j--;
-                }while(a[j]>pivot);
+int partition(int A[],int lb, int ub){
 
-                        if(i<j)
-                        {
-                        int temp=a[i];
-                        a[i]=a[j];
-                        a[j]=temp;
-                        }
-        }
-        int temp=a[l];
-         a[l]=a[j];
-         a[j]=temp;
-         return j;
+	int pivot=A[lb];
+
+	int start=lb;
+
+	int end =ub;
+
+while(start<end){
+
+	while(A[start] <= pivot){
+
+    	start++;
+
+	}
+
+	while(A[end] > pivot){
+
+    	end--;
+
+	}
+
+	if (start<end){
+
+ 
+
+    	t=A[start];
+
+    	A[start]=A[end];
+
+    	A[end]=t;
+
+	}
+
 }
 
-void qs(int a[],int l,int h)
+ 
+
+    	t=A[lb];
+
+    	A[lb]=A[end];
+
+    	A[end]=t;
+
+ 
+
+	return end;
+
+ 
+
+}
+
+ 
+
+void quicksort(int A[], int lb ,int ub)
+
 {
- if(l<h)
- {
- int j=partition(a,l,h);
- qs(a,l,j);
- qs(a,j+1,h);
- }
+
+   int loc;
+
+   if(lb<ub){
+
+	loc=partition(A,lb,ub);
+
+	quicksort(A, lb, loc-1);
+
+	quicksort(A, loc+1, ub);
+
+   }
+
 }
 
 int main()
+
 {
-        int n=1000,i;
-        int k=0;
-        clock_t start,end;
-        while(k<100)
-        {
-                int a[n];
-                for(i=0;i<n;i++)
-                {
-                        a[i]=rand()%2000;
-                }
-                start = clock();
-                qs(a,0,n-1);
-                end = clock();
-                double d= end-start/CLOCKS_PER_SEC;
-                cout<<n<<"\t"<<d<<"\n";
-                k++;
-                n+=1000;
-        }
-        return 0;
+
+    	int n=0,j=1000,k=0,i;
+
+    	clock_t start,end;
+
+    	while(k<100)
+
+    	{
+
+     	       n=j;
+
+            	j=j+1000;
+
+            	int A[n];
+
+            	for(i=0;i<n;i++)
+
+            	{
+
+                    	A[i]=rand()%100000;
+
+            	}
+
+start=clock();
+
+quicksort(A,0,n-1);
+
+end=clock();
+
+double d=end-start/CLOCKS_PER_SEC;
+
+cout<<n<<" "<<d<<endl;
+
+k=k+1;
+
+    	}
+
+ return 0;
+
 }
