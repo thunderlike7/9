@@ -1,56 +1,82 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int t;
+int b[20000000];
 
-int partition(int A[],int lb, int ub){
-
-	int pivot=A[lb];
-
-	int start=lb;
-
-	int end =ub;
-
-while(start<end){
-
-	while(A[start] <= pivot){
-
-    	start++;
-
-	}
-
-	while(A[end] > pivot){
-
-    	end--;
-
-	}
-
-	if (start<end){
+void merge(int a[],int lb, int mid, int ub){
 
  
 
-    	t=A[start];
+int i=lb;
 
-    	A[start]=A[end];
+int j=mid+1;
 
-    	A[end]=t;
+int k=lb;
+
+ 
+
+while(i<=mid && j<=ub){
+
+ 
+
+	if(a[i]<=a[j]){
+
+    	b[k]=a[i];
+
+    	i++;
+
+    	k++;
+
+	}
+
+	else {
+
+    	b[k]=a[j];
+
+    	j++;
+
+    	k++;
 
 	}
 
 }
 
+if(i>mid){
+
+	while(j<=ub){
+
+    	b[k]=a[j];
+
+    	j++;
+
+    	k++;
+
+	}
+
+}
+
+else{
+
+    	while(i<=mid){
+
+    	b[k]=a[i];
+
+    	i++;
+
+    	k++;
+
+	}
+
  
 
-    	t=A[lb];
+}
 
-    	A[lb]=A[end];
+for(i=lb;i<=ub;i++){
 
-    	A[end]=t;
+    	a[i]=b[i];
 
- 
-
-	return end;
+	}
 
  
 
@@ -58,64 +84,67 @@ while(start<end){
 
  
 
-void quicksort(int A[], int lb ,int ub)
+void mergesort(int a[],int lb,int ub){
 
-{
+	int mid;
 
-   int loc;
+if(lb<ub){
 
-   if(lb<ub){
+	mid=(lb+ub)/2;
 
-	loc=partition(A,lb,ub);
+	mergesort(a,lb,mid);
 
-	quicksort(A, lb, loc-1);
+	mergesort(a,mid+1,ub);
 
-	quicksort(A, loc+1, ub);
-
-   }
+	merge(a,lb,mid,ub);
 
 }
+
+}
+
+ 
 
 int main()
 
 {
+int n=0,i;
 
-    	int n=0,j=1000,k=0,i;
+	clock_t start,end;
 
-    	clock_t start,end;
+	int k=0,j=1000;
 
-    	while(k<100)
+	while(k<100)
 
-    	{
+	{
 
-     	       n=j;
+        	n=j;
 
-            	j=j+1000;
+        	j=j+1000;
 
-            	int A[n];
+        	int a[n];
 
-            	for(i=0;i<n;i++)
+        	for(i=1;i<=n;i++){
 
-            	{
+                	a[i]=rand()%100000;
 
-                    	A[i]=rand()%100000;
+        	}
 
-            	}
+        	start=clock();
 
-start=clock();
+        	mergesort(a,1,n);
 
-quicksort(A,0,n-1);
+        	end=clock();
 
-end=clock();
+        	double d=end-start/CLOCKS_PER_SEC;
 
-double d=end-start/CLOCKS_PER_SEC;
+        	cout<<n<<" "<<d<<endl;
 
-cout<<n<<" "<<d<<endl;
+        	k=k+1;
 
-k=k+1;
+	}
 
-    	}
+ 
 
- return 0;
+	return 0;
 
 }
